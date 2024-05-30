@@ -1,0 +1,226 @@
+Name,Primary Purpose,Secondary Purpose,General
+Microsoft Word,Word Processing,Document Creation,Working
+Microsoft Excel,Spreadsheet,Data Analysis,Working
+Microsoft PowerPoint,Presentation,Slides,Working
+Microsoft Outlook,Email,Calendar,Communication
+Microsoft Access,Database Management,,Working
+Microsoft OneNote,Note-taking,Organization,Working
+Microsoft Publisher,Publishing,Design,Working
+Microsoft Teams,Communication,Collaboration,Communication
+Salesforce,CRM,Sales Management,Working
+SAP ERP,Enterprise Resource Planning,Finance,Working
+Oracle ERP,Enterprise Resource Planning,HR,Working
+Workday,HR,Finance,Working
+ServiceNow,IT Service Management,Workflow,Working
+Zoho CRM,CRM,Sales Management,Working
+HubSpot,CRM,Marketing,Working
+Trello,Project Management,Task Management,Working
+Asana,Project Management,Collaboration,Working
+JIRA,Project Management,Issue Tracking,Working
+Confluence,Collaboration,Documentation,Working
+Slack,Communication,Collaboration,Communication
+Dropbox,Storage,File Sharing,Working
+Google Drive,Storage,Collaboration,Working
+GitHub,Version Control,Collaboration,Working
+GitLab,Version Control,CI/CD,Working
+Bitbucket,Version Control,Collaboration,Working
+Visual Studio Code,IDE,Programming,Working
+IntelliJ IDEA,IDE,Programming,Working
+Eclipse,IDE,Programming,Working
+PyCharm,IDE,Programming,Working
+NetBeans,IDE,Programming,Working
+Sublime Text,Text Editor,Programming,Working
+Atom,Text Editor,Programming,Working
+Notepad++,Text Editor,Programming,Working
+Python,Programming Language,Scripting,Working
+Java,Programming Language,Application Development,Working
+JavaScript,Programming Language,Web Development,Working
+C++,Programming Language,System Programming,Working
+C#,Programming Language,Application Development,Working
+Ruby,Programming Language,Web Development,Working
+PHP,Programming Language,Web Development,Working
+Swift,Programming Language,Mobile Development,Working
+Kotlin,Programming Language,Mobile Development,Working
+R,Programming Language,Statistical Computing,Working
+Go,Programming Language,System Programming,Working
+Rust,Programming Language,System Programming,Working
+TypeScript,Programming Language,Web Development,Working
+HTML,Markup Language,Web Development,Working
+CSS,Style Sheet Language,Web Design,Working
+SQL,Database Query Language,Data Management,Working
+Perl,Programming Language,Scripting,Working
+Scala,Programming Language,Application Development,Working
+MATLAB,Programming Language,Numerical Computing,Working
+Julia,Programming Language,Technical Computing,Working
+COBOL,Programming Language,Legacy Systems,Working
+Fortran,Programming Language,Scientific Computing,Working
+Objective-C,Programming Language,Application Development,Working
+Lua,Programming Language,Game Development,Working
+Shell Script,Programming Language,Scripting,Working
+Powershell,Programming Language,System Administration,Working
+Ruby on Rails,Web Development,Framework,Working
+Django,Web Development,Framework,Working
+Flask,Web Development,Framework,Working
+Spring,Web Development,Framework,Working
+Laravel,Web Development,Framework,Working
+ASP.NET,Web Development,Framework,Working
+Vue.js,Web Development,Framework,Working
+React,Web Development,Framework,Working
+Angular,Web Development,Framework,Working
+Ember.js,Web Development,Framework,Working
+Svelte,Web Development,Framework,Working
+Bootstrap,Web Development,Framework,Working
+Tailwind CSS,Web Development,Framework,Working
+jQuery,Web Development,Library,Working
+Express,Web Development,Framework,Working
+Keras,Machine Learning,Library,Working
+TensorFlow,Machine Learning,Library,Working
+PyTorch,Machine Learning,Library,Working
+OpenCV,Computer Vision,Library,Working
+NLTK,Natural Language Processing,Library,Working
+Spacy,Natural Language Processing,Library,Working
+Gensim,Natural Language Processing,Library,Working
+Scikit-learn,Machine Learning,Library,Working
+Pandas,Data Analysis,Library,Working
+NumPy,Scientific Computing,Library,Working
+SciPy,Scientific Computing,Library,Working
+Matplotlib,Data Visualization,Library,Working
+Seaborn,Data Visualization,Library,Working
+Plotly,Data Visualization,Library,Working
+Tableau,Data Visualization,BI,Working
+Power BI,Data Visualization,BI,Working
+QlikView,Data Visualization,BI,Working
+Domo,Data Visualization,BI,Working
+Looker,Data Visualization,BI,Working
+Microsoft Power Automate,Automation,Workflow,Working
+UiPath,Automation,RPA,Working
+Blue Prism,Automation,RPA,Working
+Automation Anywhere,Automation,RPA,Working
+Zapier,Automation,Integration,Working
+IFTTT,Automation,Integration,Working
+Ansible,Automation,Configuration Management,Working
+Chef,Automation,Configuration Management,Working
+Puppet,Automation,Configuration Management,Working
+Terraform,Automation,Infrastructure as Code,Working
+Docker,Containerization,Deployment,Working
+Kubernetes,Container Orchestration,Deployment,Working
+OpenShift,Container Orchestration,Deployment,Working
+Apache Hadoop,Big Data,Processing,Working
+Apache Spark,Big Data,Processing,Working
+Apache Kafka,Big Data,Streaming,Working
+Elasticsearch,Big Data,Search,Working
+Logstash,Big Data,Logging,Working
+Kibana,Big Data,Visualization,Working
+Splunk,Big Data,Monitoring,Working
+Snowflake,Data Warehouse,Analytics,Working
+Amazon Redshift,Data Warehouse,Analytics,Working
+Google BigQuery,Data Warehouse,Analytics,Working
+Microsoft Azure Synapse,Data Warehouse,Analytics,Working
+Teradata,Data Warehouse,Analytics,Working
+MongoDB,Database,NoSQL,Working
+CouchDB,Database,NoSQL,Working
+Cassandra,Database,NoSQL,Working
+Redis,Database,In-memory,Working
+MySQL,Database,SQL,Working
+PostgreSQL,Database,SQL,Working
+Oracle Database,Database,SQL,Working
+SQL Server,Database,SQL,Working
+SQLite,Database,SQL,Working
+MariaDB,Database,SQL,Working
+Firebase,Database,Realtime,Working
+Realm,Database,Mobile,Working
+Couchbase,Database,NoSQL,Working
+Apache HBase,Database,NoSQL,Working
+Neo4j,Database,Graph,Working
+Microsoft Dynamics 365,ERP,CRM,Working
+Infor ERP,ERP,Enterprise Resource Planning,Working
+Epicor ERP,ERP,Enterprise Resource Planning,Working
+Netsuite ERP,ERP,Enterprise Resource Planning,Working
+JD Edwards ERP,ERP,Enterprise Resource Planning,Working
+Sage ERP,ERP,Enterprise Resource Planning,Working
+Odoo,ERP,Enterprise Resource Planning,Working
+Minecraft,Game,Building,Entertainment
+Fortnite,Game,Battle Royale,Entertainment
+League of Legends,Game,MOBA,Entertainment
+Call of Duty,Game,First-person Shooter,Entertainment
+World of Warcraft,Game,MMORPG,Entertainment
+The Sims,Game,Simulation,Entertainment
+Grand Theft Auto V,Game,Open World,Entertainment
+Overwatch,Game,First-person Shooter,Entertainment
+Apex Legends,Game,Battle Royale,Entertainment
+Animal Crossing: New Horizons,Game,Simulation,Entertainment
+FIFA 21,Game,Sports,Entertainment
+NBA 2K21,Game,Sports,Entertainment
+Among Us,Game,Party,Entertainment
+Cyberpunk 2077,Game,Open World,Entertainment
+The Witcher 3: Wild Hunt,Game,Role-playing,Entertainment
+Red Dead Redemption 2,Game,Open World,Entertainment
+Assassin's Creed Valhalla,Game,Action RPG,Entertainment
+Dota 2,Game,MOBA,Entertainment
+Counter-Strike: Global Offensive,Game,First-person Shooter,Entertainment
+Valorant,Game,First-person Shooter,Entertainment
+Hades,Game,Roguelike,Entertainment
+Stardew Valley,Game,Simulation,Entertainment
+Terraria,Game,Sandbox,Entertainment
+Rocket League,Game,Sports,Entertainment
+Fall Guys,Game,Party,Entertainment
+The Legend of Zelda: Breath of the Wild,Game,Adventure,Entertainment
+Super Mario Odyssey,Game,Platform,Entertainment
+Dark Souls III,Game,Action RPG,Entertainment
+Sekiro: Shadows Die Twice,Game,Action Adventure,Entertainment
+Persona 5,Game,JRPG,Entertainment
+Final Fantasy VII Remake,Game,JRPG,Entertainment
+Monster Hunter: World,Game,Action RPG,Entertainment
+The Elder Scrolls V: Skyrim,Game,Role-playing,Entertainment
+BioShock Infinite,Game,First-person Shooter,Entertainment
+Portal 2,Game,Puzzle,Entertainment
+Mass Effect 3,Game,Action RPG,Entertainment
+Dragon Age: Inquisition,Game,Action RPG,Entertainment
+Halo Infinite,Game,First-person Shooter,Entertainment
+Destiny 2,Game,MMO,Entertainment
+Rainbow Six Siege,Game,First-person Shooter,Entertainment
+StarCraft II,Game,RTS,Entertainment
+Civilization VI,Game,Strategy,Entertainment
+Total War: Warhammer II,Game,Strategy,Entertainment
+Crusader Kings III,Game,Strategy,Entertainment
+The Outer Worlds,Game,Action RPG,Entertainment
+Divinity: Original Sin 2,Game,Role-playing,Entertainment
+Disco Elysium,Game,Role-playing,Entertainment
+Hollow Knight,Game,Action Adventure,Entertainment
+Discord,,,Communication
+.py,,,Working
+.docx,,,Working
+.xlsx,,,Working
+.pptx,,,Working
+.pdf,,,Working
+.txt,,,Working
+.csv,,,Working
+.html,,,Working
+.xml,,,Working
+.json,,,Working
+.sql,,,Working
+.zip,,,Working
+.rar,,,Working
+.exe,,,Working
+.dll,,,Working
+.iso,,,Working
+.jpeg,,,Entertainment
+.jpg,,,Entertainment
+.png,,,Entertainment
+.gif,,,Entertainment
+.mp3,,,Entertainment
+.wav,,,Entertainment
+.mp4,,,Entertainment
+.mkv,,,Entertainment
+.avi,,,Entertainment
+.mov,,,Entertainment
+.flv,,,Entertainment
+.mpg,,,Entertainment
+.wmv,,,Entertainment
+.bmp,,,Entertainment
+.psd,,,Working
+.ai,,,Working
+.indd,,,Working
+.svg,,,Working
+.eps,,,Working
+.cdr,,,Working
