@@ -24,7 +24,7 @@ def get_active_window_obj():
 
 if __name__ == "__main__":
 
-    for i in range(200):
+    for i in range(30):
         active_program = get_active_window_title()
         window_producer2(active_program,username='Domianik', topic_name="used_apps_all_users3")
         #print("Obecnie używany program:", active_program)
@@ -32,10 +32,16 @@ if __name__ == "__main__":
 
 
 
-    for i in range(200):
+    for i in range(30):
         active_program = get_active_window_title()
-        window_producer2(active_program,username='Luna', topic_name="used_apps_all_users3")
+        window_producer2(active_program,username='Stefan', topic_name="used_apps_all_users3")
         #print("Obecnie używany program:", active_program)
         sleep(1)
+
+        for i in range(30):
+            active_program = get_active_window_title()
+            window_producer2(active_program, username='Artur', topic_name="used_apps_all_users3")
+            # print("Obecnie używany program:", active_program)
+            sleep(1)
 
 

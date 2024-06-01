@@ -96,4 +96,34 @@ def user_activity_type_bar_chart(df, user='test'):
     fig.show()
 
 
+def create_bar_plot(df):
+    """
+    Tworzy wykres słupkowy czasu spędzonego przez użytkowników (user) w poszczególnych typach aktywności (role).
 
+    Args:
+    df (pd.DataFrame): Ramka danych zawierająca kolumny 'user', 'message', 'date', 'time', 'total_time', 'role'.
+
+    Returns:
+    fig (plotly.graph_objects.Figure): Obiekt wykresu słupkowego.
+    """
+    # Upewnij się, że kolumna 'total_time' jest typu liczbowego
+    df['total_time'] = pd.to_numeric(df['total_time'], errors='coerce')
+
+    # Tworzenie wykresu słupkowego grupowanego według użytkowników i podzielonego na role
+    fig = px.bar(df,
+                 x='user',
+                 y='total_time',
+                 color='role',
+                 barmode='group',
+                 title='Total Time Spent in Different Activities by User',
+                 labels={'total_time': 'Total Time', 'user': 'User', 'role': 'Role'})
+
+    # Aktualizowanie układu wykresu
+    fig.update_layout(
+        xaxis_title='User',
+        yaxis_title='Total Time',
+        legend_title='Role',
+        barmode='group'
+    )
+
+    return fig

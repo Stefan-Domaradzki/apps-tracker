@@ -8,8 +8,10 @@ import pandas as pd
 
 
 from tracker_consumer import window_consumer_single_topic
+
 from data_transforming import clean_and_transform
 from data_transforming import user_activity_type_bar_chart
+from data_transforming import create_bar_plot
 
 app = Dash(__name__)
 
@@ -20,7 +22,8 @@ app = Dash(__name__)
 df = window_consumer_single_topic(topic='used_apps_all_users3')
 df = clean_and_transform(df)
 
-fig = user_activity_type_bar_chart(df, user='Stefan')
+#fig = user_activity_type_bar_chart(df, user='Stefan')
+fig = create_bar_plot(df)
 
 app.layout = html.Div(children=[
     html.H1(children='Hello Dash'),

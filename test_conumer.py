@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     test_df = window_consumer_single_topic(topic='used_apps_all_users3')
     current_time = datetime.now()
-    filename = current_time.strftime("/data/data-%Y-%m-%d-%H.csv")
+    filename = current_time.strftime("./data/data-%Y-%m-%d-%H.csv")
 
     # Zapisywanie ramki danych do pliku CSV z dynamicznie generowaną nazwą pliku
     test_df.to_csv(filename, index=False)
