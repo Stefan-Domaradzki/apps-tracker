@@ -17,6 +17,10 @@ def check_topics(kafka_bootstrap_servers='localhost:9092'):
     return consumer.topics()
 
 
+def all_users(df):
+    return df['user'].unique()
+
+
 def window_producer2(msg, topic_name='used_apps_all_users', username='test', kafka_bootstrap_servers='localhost:9092'):
 
     producer = KafkaProducer(
@@ -30,7 +34,6 @@ def window_producer2(msg, topic_name='used_apps_all_users', username='test', kaf
         'date': datetime.now().isoformat()
     }
 
-    # print(f' User: {username}, using {msg} @ {datetime.now()} | Sending to {topic_name}')
     print(f' User: {username}, using {msg} @ {datetime.now()} | to kafka topic {topic_name}')
     producer.send(topic_name, message)
     producer.flush()
@@ -42,14 +45,11 @@ def window_consumer_single_topic(topic='', kafka_bootstrap_servers='localhost:90
         bootstrap_servers=kafka_bootstrap_servers,
         auto_offset_reset='earliest',
         value_deserializer=lambda x: json.loads(x.decode('utf-8')),
-        consumer_timeout_ms=5000 # genialny parametr musze go potem zapisac sobie na przyszlosc
+        consumer_timeout_ms=5000
     )
 
-     # Subskrypcja tematu
     consumer.subscribe([topic])
     print(f'Subscribed to {topic}')
-
-    # Pobieranie i wyświetlanie najnowszej wiadomości
 
     messages = []
 
@@ -66,7 +66,7 @@ def window_consumer_single_topic(topic='', kafka_bootstrap_servers='localhost:90
             msg = value['message']
             date = value['date']
 
-            print(f'User: {user}, Message: {msg}, Date: {date}')
+            #print(f'User: {user}, Message: {msg}, Date: {date}')
 
         #time.sleep(1)  # Przerwa przed ponownym sprawdzeniem
 
@@ -74,7 +74,7 @@ def window_consumer_single_topic(topic='', kafka_bootstrap_servers='localhost:90
         consumer.close()
 
     finally:
-        print("Tracker Consumer closed succesfully")
+        print("Tracker Consumer closed successfully")
 
     df = pd.DataFrame(messages)
 

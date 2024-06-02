@@ -4,25 +4,21 @@ import plotly.express as px
 from dash import Dash, html, dcc
 
 
-# Funkcja przypisująca rolę na podstawie nazwy aplikacji z użyciem regex
 def assign_role(message):
 
-    if(isinstance(message, str) == False):
+    if not isinstance(message, str):
         print(f"Message: {message} | type: {type(message)}")
         return 'other'
 
-    # Wczytanie danych z CSV z aplikacjami i grami
     apps_and_games = pd.read_csv('./data/apps-general.csv')
 
-    # Tworzenie słownika nazwa aplikacji -> rola
     app_roles = apps_and_games.set_index('Name')['General'].to_dict()
 
     for app in app_roles:
-        # Użycie wyrażenia regularnego do wyszukiwania nazwy aplikacji w wiadomości
         if re.search(r'\b' + re.escape(app) + r'\b', message, re.IGNORECASE):
             return app_roles[app]
 
-    return 'other'  # Domyślna wartość jeśli aplikacja nie zostanie znaleziona
+    return 'other'
 
 
 def clean_and_transform(df):
@@ -31,13 +27,10 @@ def clean_and_transform(df):
 
     df = df.sort_values(by=['user', 'message', 'date', 'time'])
 
-    # Obliczanie różnicy czasu między kolejnymi wierszami
     df['time_diff'] = df['time'].diff().fillna(pd.Timedelta(seconds=0))
 
-    # Inicjalizacja nowej ramki danych do przechowywania wyników
     result_data = []
 
-    # Zmienna pomocnicza do przechowywania bieżącej grupy
     current_group = None
 
     for index, row in df.iterrows():
@@ -53,14 +46,11 @@ def clean_and_transform(df):
             current_group = row.copy()
             current_group['total_time'] = pd.Timedelta(seconds=0)
 
-    # Dodanie ostatniej grupy
     if current_group is not None:
         result_data.append(current_group)
 
-    # Tworzenie wynikowej ramki danych
     result_df = pd.DataFrame(result_data)
 
-    # Usuwanie niepotrzebnych kolumn i formatowanie wyniku
     result_df = result_df.drop(columns=['time_diff'])
     result_df["total_time"] = result_df["total_time"].dt.total_seconds()
     result_df['message'] = result_df['message'].astype(str)
@@ -71,45 +61,10 @@ def clean_and_transform(df):
     return result_df
 
 
-def user_activity_type_bar_chart(df, user='test'):
-    df['total_time'] = pd.to_numeric(df['total_time'], errors='coerce')
-
-    # Tworzenie wykresu słupkowego
-    fig = px.bar(df,
-                 x='role',
-                 y='total_time',
-                 color='user',
-                 barmode='group',
-                 title='Total Time Spent i',
-                 labels={'total_time': 'Total Time', 'role': 'Role', 'user': 'User'})
-
-    # Aktualizowanie układu wykresu
-    fig.update_layout(
-        xaxis_title='Role',
-        yaxis_title='Total Time',
-        legend_title='User',
-        legend=dict(title='User'),
-        barmode='group'
-    )
-
-    # Wyświetlenie wykresu
-    fig.show()
-
-
 def create_bar_plot(df):
-    """
-    Tworzy wykres słupkowy czasu spędzonego przez użytkowników (user) w poszczególnych typach aktywności (role).
 
-    Args:
-    df (pd.DataFrame): Ramka danych zawierająca kolumny 'user', 'message', 'date', 'time', 'total_time', 'role'.
-
-    Returns:
-    fig (plotly.graph_objects.Figure): Obiekt wykresu słupkowego.
-    """
-    # Upewnij się, że kolumna 'total_time' jest typu liczbowego
     df['total_time'] = pd.to_numeric(df['total_time'], errors='coerce')
 
-    # Tworzenie wykresu słupkowego grupowanego według użytkowników i podzielonego na role
     fig = px.bar(df,
                  x='user',
                  y='total_time',
@@ -118,12 +73,59 @@ def create_bar_plot(df):
                  title='Total Time Spent in Different Activities by User',
                  labels={'total_time': 'Total Time', 'user': 'User', 'role': 'Role'})
 
-    # Aktualizowanie układu wykresu
     fig.update_layout(
         xaxis_title='User',
         yaxis_title='Total Time',
         legend_title='Role',
         barmode='group'
     )
+
+    return fig
+
+
+def plot_top_apps_pie_chart(df, user):
+
+    user_df = df[df['user'] == user]
+
+    app_time = user_df.groupby('message')['total_time'].sum()
+    top_apps = app_time.nlargest(3)
+
+    other_apps_time = app_time[~app_time.index.isin(top_apps.index)].sum()
+    top_apps['Inne'] = other_apps_time
+
+    pie_data = pd.DataFrame({'Aplikacja': top_apps.index, 'Całkowity czas': top_apps.values})
+
+    pie_data['Procent'] = (pie_data['Całkowity czas'] / pie_data['Całkowity czas'].sum()) * 100
+
+    fig = px.pie(pie_data, names='Aplikacja', values='Procent',
+                 title=f'Procentowy udział czasu w aplikacjach przez {user}',
+                 color_discrete_sequence=px.colors.qualitative.Plotly)
+
+    return fig
+
+
+def plot_stacked_barchart_last_7_days(df, user):
+    user_df = df[df['user'] == user]
+
+    user_df['date'] = pd.to_datetime(user_df['date'])
+
+    end_date = user_df['date'].max()
+    start_date = end_date - pd.DateOffset(days=6)
+    last_7_days = pd.date_range(start=start_date, end=end_date)
+
+    # role wczytywane aby w przyszlosci moc rozszrzyc o inne
+    all_roles = user_df['role'].unique()
+    all_days_df = pd.DataFrame({'date': last_7_days})
+    all_days_df = pd.concat([all_days_df] * len(all_roles), ignore_index=True)
+    all_days_df['role'] = all_roles.tolist() * len(last_7_days)
+
+    last_7_days_df = pd.merge(all_days_df, user_df, on=['date', 'role'], how='left')
+
+    grouped_df = last_7_days_df.groupby(['date', 'role'])['total_time'].sum().reset_index()
+
+    fig = px.bar(grouped_df, x='date', y='total_time', color='role',
+                 title=f'Czas spędzony w różnych kategoriach przez {user} (Ostatnie 7 dni)',
+                 labels={'date': 'Data', 'total_time': 'Całkowity czas (s)', 'role': 'Kategoria'},
+                 barmode='stack')
 
     return fig
