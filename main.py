@@ -1,8 +1,12 @@
+import os
 import win32gui
 from time import sleep
 from kafka_connector import window_producer2
 
+
+# user = os.getlogin()
 user = 'Stefan'
+
 
 def get_active_window_title():
     active_window = win32gui.GetForegroundWindow()

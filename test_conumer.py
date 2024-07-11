@@ -6,7 +6,7 @@ from datetime import datetime
 from kafka_connector import window_consumer_single_topic
 from kafka_connector import check_topics
 from data_transforming import clean_and_transform
-from data_transforming import user_activity_type_bar_chart
+#from data_transforming import user_activity_type_bar_chart
 
 
 if __name__ == "__main__":
