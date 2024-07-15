@@ -1,11 +1,24 @@
 import json
 import win32gui
 import pandas as pd
+import logging
+
 from time import sleep
 from datetime import datetime
 from datetime import timedelta
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
+
+
+connector_logger = logging.getLogger(__name__)
+connector_logger.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
+
+file_handler = logging.FileHandler('./logs/connector.log')
+file_handler.setFormatter(formatter)
+
+connector_logger.addHandler(file_handler)
 
 
 def check_topics(kafka_bootstrap_servers='localhost:9092'):
@@ -72,7 +85,7 @@ def window_producer3(topic_name='used_apps_keys_topic',
                 'date':       date.isoformat()
             }
 
-            print('User: {}, Message: {}, Time_spent: {}, Date: {}'.format(username, previous_window, time_spent, date))
+            # print('User: {}, Message: {}, Time_spent: {}, Date: {}'.format(username,previous_window,time_spent,date))
 
             producer.send(topic=topic_name,
                           key=username,
@@ -80,11 +93,12 @@ def window_producer3(topic_name='used_apps_keys_topic',
 
             producer.flush()
 
+            # sleep(1)
+
             previous_window = window
             window_time = date
-            sleep(1)
 
-    print("Tracker producer closed successfully")
+    connector_logger.info("Tracker producer closed successfully")
 
 
 def window_consumer_2(topic='', kafka_bootstrap_servers='localhost:9092'):
@@ -104,28 +118,30 @@ def window_consumer_2(topic='', kafka_bootstrap_servers='localhost:9092'):
 
     try:
         for message in consumer:
-            # print(message)
 
             user = {'user': message.key}
             value = message.value
-            print(value)
+
             value = user | value
             messages.append(value)
 
-            msg = value['message']
-            time_spent = value['time_spent']
-            date = value['date']
-
-            #print('User: {}, Message: {}, Time_spent: {}, Date: {}'.format(user, msg, time_spent, date))
+            # msg = value['message']
+            # time_spent = value['time_spent']
+            # date = value['date']
 
     except KeyboardInterrupt:
         consumer.close()
 
-    print("Tracker Consumer closed successfully")
+    finally:
+        connector_logger.info("Tracker Consumer closed successfully")
 
     df = pd.DataFrame(messages)
 
-    return df
+    current_time = datetime.now()
+    filename = current_time.strftime("./data/test-data/data-%Y-%m-%d-%H.csv")
+    df.to_csv(filename, index=False)
+
+    return pd.DataFrame(messages)
 
 
 def window_consumer_single_topic(topic='', kafka_bootstrap_servers='localhost:9092'):

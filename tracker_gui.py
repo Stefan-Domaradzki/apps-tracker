@@ -3,7 +3,7 @@ import plotly.express as px
 import pandas as pd
 import plotly.io as pio
 
-from kafka_connector import window_consumer_single_topic, all_users
+from kafka_connector import window_consumer_single_topic, all_users, window_consumer_2
 from data_transforming import clean_and_transform
 from data_transforming import create_bar_plot, plot_top_apps_pie_chart, plot_stacked_barchart_last_7_days
 
@@ -15,7 +15,8 @@ pio.templates["light"].layout.paper_bgcolor = 'rgba(245, 245, 245, 1)'
 pio.templates["light"].layout.font.color = 'rgba(50, 50, 50, 1)'
 pio.templates["light"].layout.colorway = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]
 
-df = window_consumer_single_topic(topic='used_apps_all_users3')
+#df = window_consumer_single_topic(topic='used_apps_all_users3')
+df = window_consumer_2(topic='apps3')
 df = clean_and_transform(df)
 
 users = all_users(df)

@@ -16,7 +16,6 @@ if __name__ == "__main__":
     test_df = window_consumer_single_topic(topic='used_apps_all_users3')
     current_time = datetime.now()
     filename = current_time.strftime("./data/data-%Y-%m-%d-%H.csv")
-
     test_df.to_csv(filename, index=False)
 
     print(f"Ramka danych została zapisana do pliku: {filename}")

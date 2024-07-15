@@ -21,13 +21,29 @@ def assign_role(message):
     return 'other'
 
 
-def clean_and_transform(df):
+def clean_app_name(message):
+    if not isinstance(message, str):
+        print(f"Message: {message} | type: {type(message)}")
+        return message
+
+    apps_and_games = pd.read_csv('./data/apps-general.csv')
+    app_roles = apps_and_games.set_index('Name')['General'].to_dict()
+
+    for app in app_roles:
+        if re.search(r'\b' + re.escape(app) + r'\b', message, re.IGNORECASE):
+            return app
+
+    return message
+
+
+def clean_and_transform(data_frame):
+    df = data_frame
+    df = df.dropna()
+
     df[['date', 'time']] = df['date'].str.split('T', expand=True)
     df['time'] = pd.to_datetime(df['time'], format='%H:%M:%S.%f')
 
     df = df.sort_values(by=['user', 'message', 'date', 'time'])
-
-    df['time_diff'] = df['time'].diff().fillna(pd.Timedelta(seconds=0))
 
     result_data = []
 
@@ -36,42 +52,40 @@ def clean_and_transform(df):
     for index, row in df.iterrows():
         if current_group is None:
             current_group = row.copy()
-            current_group['total_time'] = pd.Timedelta(seconds=0)
         elif (row['user'] == current_group['user'] and
               row['message'] == current_group['message'] and
               row['date'] == current_group['date']):
-            current_group['total_time'] += row['time_diff']
+            current_group['time_spent'] += row['time_spent']
         else:
             result_data.append(current_group)
             current_group = row.copy()
-            current_group['total_time'] = pd.Timedelta(seconds=0)
 
     if current_group is not None:
         result_data.append(current_group)
 
     result_df = pd.DataFrame(result_data)
 
-    result_df = result_df.drop(columns=['time_diff'])
-    result_df["total_time"] = result_df["total_time"].dt.total_seconds()
-    result_df['message'] = result_df['message'].astype(str)
-    result_df = result_df.dropna()
-    result_df['role'] = df['message'].apply(assign_role)
+    result_df['app_name'] = result_df['message'].apply(clean_app_name)
+    result_df['role'] = result_df['message'].apply(assign_role)
 
-    print("Successfully cleaned and transformed ")
+    result_df['time_spent'] = round(result_df['time_spent'], 0)
+
+    # print(type(result_df))
+
     return result_df
 
 
 def create_bar_plot(df):
 
-    df['total_time'] = pd.to_numeric(df['total_time'], errors='coerce')
+#    df['total_time'] = pd.to_numeric(df['total_time'], errors='coerce')
 
     fig = px.bar(df,
                  x='user',
-                 y='total_time',
+                 y='time_spent',
                  color='role',
                  barmode='group',
                  title='Total Time Spent in Different Activities by User',
-                 labels={'total_time': 'Total Time', 'user': 'User', 'role': 'Role'})
+                 labels={'time_spent': 'Total Time', 'user': 'User', 'role': 'Role'})
 
     fig.update_layout(
         xaxis_title='User',
@@ -83,11 +97,12 @@ def create_bar_plot(df):
     return fig
 
 
+
 def plot_top_apps_pie_chart(df, user):
 
     user_df = df[df['user'] == user]
 
-    app_time = user_df.groupby('message')['total_time'].sum()
+    app_time = user_df.groupby('message')['time_spent'].sum()
     top_apps = app_time.nlargest(3)
 
     other_apps_time = app_time[~app_time.index.isin(top_apps.index)].sum()
@@ -121,11 +136,11 @@ def plot_stacked_barchart_last_7_days(df, user):
 
     last_7_days_df = pd.merge(all_days_df, user_df, on=['date', 'role'], how='left')
 
-    grouped_df = last_7_days_df.groupby(['date', 'role'])['total_time'].sum().reset_index()
+    grouped_df = last_7_days_df.groupby(['date', 'role'])['time_spent'].sum().reset_index()
 
-    fig = px.bar(grouped_df, x='date', y='total_time', color='role',
+    fig = px.bar(grouped_df, x='date', y='time_spent', color='role',
                  title=f'Czas spędzony w różnych kategoriach przez {user} (Ostatnie 7 dni)',
-                 labels={'date': 'Data', 'total_time': 'Całkowity czas (s)', 'role': 'Kategoria'},
+                 labels={'date': 'Data', 'time_spent': 'Całkowity czas (s)', 'role': 'Kategoria'},
                  barmode='stack')
 
     return fig
