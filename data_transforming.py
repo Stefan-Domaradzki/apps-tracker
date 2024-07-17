@@ -77,7 +77,6 @@ def clean_and_transform(data_frame):
 
 def create_bar_plot(df):
 
-#    df['total_time'] = pd.to_numeric(df['total_time'], errors='coerce')
 
     fig = px.bar(df,
                  x='user',
@@ -106,14 +105,14 @@ def plot_top_apps_pie_chart(df, user):
     top_apps = app_time.nlargest(3)
 
     other_apps_time = app_time[~app_time.index.isin(top_apps.index)].sum()
-    top_apps['Inne'] = other_apps_time
+    top_apps['Other'] = other_apps_time
 
-    pie_data = pd.DataFrame({'Aplikacja': top_apps.index, 'Całkowity czas': top_apps.values})
+    pie_data = pd.DataFrame({'App': top_apps.index, 'Time total': top_apps.values})
 
-    pie_data['Procent'] = (pie_data['Całkowity czas'] / pie_data['Całkowity czas'].sum()) * 100
+    pie_data['Percent'] = (pie_data['Time total'] / pie_data['Time total'].sum()) * 100
 
-    fig = px.pie(pie_data, names='Aplikacja', values='Procent',
-                 title=f'Procentowy udział czasu w aplikacjach przez {user}',
+    fig = px.pie(pie_data, names='App', values='Percent',
+                 title=f'{user} time in top 3 apps',
                  color_discrete_sequence=px.colors.qualitative.Plotly)
 
     return fig
@@ -128,7 +127,6 @@ def plot_stacked_barchart_last_7_days(df, user):
     start_date = end_date - pd.DateOffset(days=6)
     last_7_days = pd.date_range(start=start_date, end=end_date)
 
-    # role wczytywane aby w przyszlosci moc rozszrzyc o inne
     all_roles = user_df['role'].unique()
     all_days_df = pd.DataFrame({'date': last_7_days})
     all_days_df = pd.concat([all_days_df] * len(all_roles), ignore_index=True)
@@ -139,8 +137,8 @@ def plot_stacked_barchart_last_7_days(df, user):
     grouped_df = last_7_days_df.groupby(['date', 'role'])['time_spent'].sum().reset_index()
 
     fig = px.bar(grouped_df, x='date', y='time_spent', color='role',
-                 title=f'Czas spędzony w różnych kategoriach przez {user} (Ostatnie 7 dni)',
-                 labels={'date': 'Data', 'time_spent': 'Całkowity czas (s)', 'role': 'Kategoria'},
+                 title=f'Time spent by {user} in apps by the categories (Last 7 days)',
+                 labels={'date': 'Date', 'time_spent': 'Total time (sec)', 'role': 'Category'},
                  barmode='stack')
 
     return fig

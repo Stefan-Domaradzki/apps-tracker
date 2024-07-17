@@ -3,7 +3,6 @@ import win32gui
 import pandas as pd
 import logging
 
-from time import sleep
 from datetime import datetime
 from datetime import timedelta
 from kafka import KafkaProducer
@@ -84,8 +83,6 @@ def window_producer3(topic_name='used_apps_keys_topic',
                 'time_spent': time_spent.total_seconds(),
                 'date':       date.isoformat()
             }
-
-            # print('User: {}, Message: {}, Time_spent: {}, Date: {}'.format(username,previous_window,time_spent,date))
 
             producer.send(topic=topic_name,
                           key=username,

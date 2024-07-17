@@ -1,6 +1,4 @@
-import win32gui
 from kafka_connector import *
-from time import sleep
 
 #test_topic = 'used_apps_keys_topic3'
 test_topic = 'apps3'

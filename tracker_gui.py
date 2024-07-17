@@ -24,14 +24,14 @@ users = all_users(df)
 app.layout = html.Div(style={'backgroundColor': '#FFFFFF', 'color': '#000000'}, children=[
     html.H1(children='Apps Tracker', style={'color': '#000000'}),
 
-    html.Div(children='166642 Domaradzki Stefan Lab 1', style={'color': '#333333'}),
+    html.Div(children='nr. indexu Nazwisko Imie Lab 1', style={'color': '#333333'}),
     html.Div(children='Usługi Sieciowe w biznesie P1', style={'color': '#333333'}),
 
     dcc.Graph(
         id='example-graph'
     ),
 
-    html.H2(children='Wybierz użytkownika', style={'color': '#000000'}),
+    html.H2(children='Chose User', style={'color': '#000000'}),
 
     dcc.Dropdown(
         id='user-dropdown',
@@ -67,7 +67,6 @@ def update_graph(selected_user):
 def update_pie_chart(selected_user):
     fig = plot_top_apps_pie_chart(df, selected_user)
 
-    # Zastosowanie szablonu light do wykresu
     fig.update_layout(template='light')
     return fig
 
